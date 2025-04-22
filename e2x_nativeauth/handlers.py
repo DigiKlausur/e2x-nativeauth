@@ -1,5 +1,7 @@
 from jupyterhub.apihandlers import APIHandler
+from jupyterhub.utils import maybe_future
 from nativeauthenticator.handlers import admin_users_scope
+from tornado import web
 
 
 class E2XUsersAPIHandler(APIHandler):
@@ -21,4 +23,11 @@ class E2XUsersAPIHandler(APIHandler):
         username = data["username"]
         password = data["password"]
         self.authenticator.admin_create_user(username, password)
+        user = self.user_from_username(username)
+        try:
+            await maybe_future(self.authenticator.add_user(user))
+        except Exception as e:
+            self.log.error(f"Failed to create user: {username}", exc_info=True)
+            self.users.delete(user)
+            raise web.HTTPError(400, f"Failed to create user {username}: {e}")
         self.finish({"status": "success", "message": "User added successfully"})
