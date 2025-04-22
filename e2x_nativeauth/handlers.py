@@ -1,8 +1,8 @@
-from jupyterhub.handlers import BaseHandler
+from jupyterhub.apihandlers import APIHandler
 from nativeauthenticator.handlers import admin_users_scope
 
 
-class E2XUsersHandler(BaseHandler):
+class E2XUsersAPIHandler(APIHandler):
     """
     Handler for managing users.
     """
