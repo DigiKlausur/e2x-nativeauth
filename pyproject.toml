@@ -46,7 +46,7 @@ path = "e2x_nativeauth/_version.py"
 github_url = "https://github.com/Digiklausur/e2x-nativeauth/"
 
 [tool.tbump.version]
-current = "0.1.0-dev1"
+current = "0.1.0-dev2"
 
 regex = '''
   (?P<major>\d+)
